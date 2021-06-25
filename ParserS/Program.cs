@@ -1,5 +1,11 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using OpenQA.Selenium.Chrome;
 
 namespace ParserS
 {
@@ -7,18 +13,36 @@ namespace ParserS
     {
         static void Main(string[] args)
         {
-            //
-            //
-
+            
+            var i = 1;
+            
             while (true)
             {
-                var i = 0;
-                var link = "https://e-katalog.intercars.com.pl/#/oferta/0,{i.ToString()},Agregaty-chlodnicze,scr_dItems/100001,301224/";
-                var productLoader = new ProductLoader(link);
-                var products = productLoader.LoadProductsFromLinq();
-                i += 16;
+               
+
+                using (var driver = new FirefoxDriver())
+                {
+                    //
+                    var link = $"https://e-katalog.intercars.com.pl/#/oferta/0,{i.ToString()},Mechanizm-wycieraczek,scr_dTree/100001,102028,938385/";
+
+                    var productLoader = new ProductLoader(link, driver);
+
+                    var products = productLoader.LoadProductsFromLinq().ToList();
+
+                   
+
+                    Console.WriteLine(i);
+
+                    i += 15;
+                  
+                }
+
+                
             }
             
+
         }
+
+
     }
 }
